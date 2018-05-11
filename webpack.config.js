@@ -64,10 +64,10 @@ if (!process.env.PROD) {
                         'https://mop-static-stage.s3-us-west-1.amazonaws.com/giraffe/styles/main.css',
       reactJs: (process.env.LOCAL_REACT
                 ? process.env.LOCAL_REACT + 'react.js'
-                : 'https://unpkg.com/react@15.4.1/dist/react.js'),
+                : 'https://unpkg.com/react@16.3.2/umd/react.development.js'),
       reactDomJs: (process.env.LOCAL_REACT
                   ? process.env.LOCAL_REACT + 'react-dom.js'
-                  : 'https://unpkg.com/react-dom@15.4.1/dist/react-dom.js')
+                  : 'https://unpkg.com/react-dom@16.3.2/umd/react-dom.development.js')
     }),
     new webpack.HotModuleReplacementPlugin(),
   ])

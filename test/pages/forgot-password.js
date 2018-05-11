@@ -27,7 +27,7 @@ describe('<ForgotPassword />', () => {
 
   it('validates email', () => {
     const login = mount(<ForgotPassword />)
-    login.find('input[name="email"]').node.value = 'foo'
+    login.find('input[name="email"]').instance().value = 'foo'
     login.find('form').simulate('submit')
     expect(login.find('.errors').text()).to.equal(
       'Invalid entry for the Email field.'
@@ -40,7 +40,7 @@ describe('<ForgotPassword />', () => {
       .reply(200)
 
     const login = mount(<ForgotPassword />)
-    login.find('input[name="email"]').node.value = 'foo@example.com'
+    login.find('input[name="email"]').instance().value = 'foo@example.com'
     login.find('form').simulate('submit')
     expect(api.pendingMocks().length).to.equal(0)
   })

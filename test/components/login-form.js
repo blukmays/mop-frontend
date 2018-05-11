@@ -22,8 +22,8 @@ describe('<LoginForm />', () => {
   it('submitting valid data calls submit function', () => {
     const spy = sinon.spy()
     const login = mount(<LoginForm handleSubmit={spy} />)
-    login.find('input[name="email"]').node.value = 'foo@example.com'
-    login.find('input[name="password"]').node.value = 'bar'
+    login.find('input[name="email"]').instance().value = 'foo@example.com'
+    login.find('input[name="password"]').instance().value = 'bar'
     login.find('form').simulate('submit')
     expect(spy.calledOnce).to.be.true
   })

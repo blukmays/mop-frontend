@@ -1,20 +1,17 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-const ZipOrPostalInput = ({ country, zipOnChange, zipValidationError, postalOnChange }) => {
+const ZipOrPostalInput = ({ country, zipOnChange, postalOnChange }) => {
   if (country === 'United States') {
     return (
-      <div>
-        <input
-          type='text'
-          name='zip'
-          placeholder='ZIP Code*'
-          className='zip moveon-track-click'
-          onChange={zipOnChange}
-          onBlur={zipOnChange}
-        />
-        <zipValidationError />
-      </div>
+      <input
+        type='text'
+        name='zip'
+        placeholder='ZIP Code*'
+        className='zip moveon-track-click'
+        onChange={zipOnChange}
+        onBlur={zipOnChange}
+      />
     )
   }
   return (
@@ -32,8 +29,7 @@ const ZipOrPostalInput = ({ country, zipOnChange, zipValidationError, postalOnCh
 ZipOrPostalInput.propTypes = {
   country: PropTypes.string,
   postalOnChange: PropTypes.func,
-  zipOnChange: PropTypes.func,
-  zipValidationError: PropTypes.element
+  zipOnChange: PropTypes.func
 }
 
 export default ZipOrPostalInput

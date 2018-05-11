@@ -42,7 +42,7 @@ describe('<SignatureAddForm />', () => {
     it('basic loading', () => {
       const store = createMockStore(storeAnonymous)
       const context = mount(<SignatureAddForm {...propsProfileBase} store={store} />)
-      const component = unwrapReduxComponent(context)
+      const component = unwrapReduxComponent(context).instance()
       expect(component.props.user.anonymous).to.be.equal(true)
       expect(context.text().toLowerCase()).to.contain('sign this petition')
     })
@@ -52,7 +52,8 @@ describe('<SignatureAddForm />', () => {
 
       const store = createMockStore(storeAnonymous)
       const context = mount(<SignatureAddForm {...propsProfileBase} store={store} />)
-
+      const component = unwrapReduxComponent(context).instance()
+      expect(component.props.user.anonymous).to.be.equal(true)
       expect(context.find('input[name="name"]').length).to.equal(1)
       expect(context.find('input[name="email"]').length).to.equal(1)
       expect(context.find('input[name="address1"]').length).to.equal(0)
@@ -95,7 +96,7 @@ describe('<SignatureAddForm />', () => {
       // Note: needs to test when it *appears* not when it's required
       const store = createMockStore(storeAkid)
       const context = mount(<SignatureAddForm {...propsProfileOpposite} store={store} />)
-      const component = unwrapReduxComponent(context)
+      const component = unwrapReduxComponent(context).instance()
       expect(Boolean(component.props.user.anonymous)).to.be.equal(false)
       // Do not display because logged in and petition doesn't need addresses
       expect(context.find('input[name="name"]').length).to.equal(0)
@@ -111,7 +112,7 @@ describe('<SignatureAddForm />', () => {
     it('local petition with user fields displaying', () => {
       const store = createMockStore(storeAkid)
       const context = mount(<SignatureAddForm {...propsProfileBase} store={store} />)
-      const component = unwrapReduxComponent(context)
+      const component = unwrapReduxComponent(context).instance()
       expect(Boolean(component.props.user.anonymous)).to.be.equal(false)
 
       const comment = context.find('textarea[name="comment"]')
@@ -130,7 +131,7 @@ describe('<SignatureAddForm />', () => {
     it('local petition without address when user has address', () => {
       const store = createMockStore(storeAkid)
       const context = mount(<SignatureAddForm {...propsProfileBase} store={store} />)
-      const component = unwrapReduxComponent(context)
+      const component = unwrapReduxComponent(context).instance()
       expect(Boolean(component.props.user.anonymous)).to.be.equal(false)
 
       const comment = context.find('textarea[name="comment"]')
@@ -169,7 +170,7 @@ describe('<SignatureAddForm />', () => {
       normalProfiles.forEach(profile => {
         const realProfile = { petition: petitionProfiles[profile.petition], query: profile.query }
         const context = mount(<SignatureAddForm {...realProfile} store={mockStoreAnon} />)
-        const component = unwrapReduxComponent(context)
+        const component = unwrapReduxComponent(context).instance()
         // 1. make sure NOT shown
         expect(context.find('input[name="thirdparty_optin"]').length,
                `normal profile should not show optin checkbox: ${JSON.stringify(profile)}`
@@ -193,7 +194,7 @@ describe('<SignatureAddForm />', () => {
       const mockStoreAnon = createMockStore(storeAnonymous)
       const realProfile = { petition: petitionProfiles[petition], query }
       const context = mount(<SignatureAddForm {...realProfile} store={mockStoreAnon} />)
-      const component = unwrapReduxComponent(context)
+      const component = unwrapReduxComponent(context).instance()
       // 1. make sure NOT shown
       expect(context.find('input[name="thirdparty_optin"][type="checkbox"]').length,
               `hidden optin profile should not have optin checkbox: ${JSON.stringify(query)}`
@@ -215,7 +216,7 @@ describe('<SignatureAddForm />', () => {
       const mockStoreAkid = createMockStore(storeAkid)
       const realProfile = { petition: petitionProfiles[petition], query }
       const context = mount(<SignatureAddForm {...realProfile} store={mockStoreAnon} />)
-      const component = unwrapReduxComponent(context)
+      const component = unwrapReduxComponent(context).instance()
       // 1. make sure shown
       expect(context.find('input[name="thirdparty_optin"][type="checkbox"]').length,
               `Show optin checkbox for ${JSON.stringify(query)}`
@@ -234,7 +235,7 @@ describe('<SignatureAddForm />', () => {
     it('logged in shows unrecognize link', () => {
       const store = createMockStore(storeAkid)
       const context = mount(<SignatureAddForm {...propsProfileBase} store={store} />)
-      const component = unwrapReduxComponent(context)
+      const component = unwrapReduxComponent(context).instance()
       expect(Boolean(component.props.user.anonymous)).to.be.equal(false)
       expect(Boolean(component.props.showAddressFields)).to.be.equal(true)
       expect(context.text()).to.contain('Not Three Stacks? Click here.')
@@ -245,7 +246,7 @@ describe('<SignatureAddForm />', () => {
     it('logout/unrecognize shows anonymous field list', () => {
       const store = createMockStore(storeAnonymous)
       const context = mount(<SignatureAddForm {...propsProfileBase} store={store} />)
-      const component = unwrapReduxComponent(context)
+      const component = unwrapReduxComponent(context).instance()
       expect(Boolean(component.props.user.anonymous)).to.be.equal(true)
       expect(context.text()).to.not.contain('Click here.')
       expect(context.find('input[name="name"]').length).to.equal(1)
@@ -257,7 +258,7 @@ describe('<SignatureAddForm />', () => {
     it('typing incomplete fields submit fails and displays validation error messages', () => {
       const store = createMockStore(storeAnonymous)
       const context = mount(<SignatureAddForm {...propsProfileBase} store={store} />)
-      const component = unwrapReduxComponent(context)
+      const component = unwrapReduxComponent(context).instance()
       expect(component.state.validationTried).to.be.equal(false)
 
       const comment = context.find('textarea[name="comment"]')
@@ -273,7 +274,7 @@ describe('<SignatureAddForm />', () => {
     it('adding a non-US address updates requirements to not require state or zip', () => {
       const store = createMockStore(storeAnonymous)
       const context = mount(<SignatureAddForm {...propsProfileBase} store={store} />)
-      const component = unwrapReduxComponent(context)
+      const component = unwrapReduxComponent(context).instance()
       const reqFieldsBefore = component.updateRequiredFields(true)
       expect(typeof reqFieldsBefore.state).to.be.equal('string')
       expect(typeof reqFieldsBefore.zip).to.be.equal('string')
@@ -294,7 +295,7 @@ describe('<SignatureAddForm />', () => {
     it('displays errors when required fields are missing', () => {
       const store = createMockStore(storeAnonymous)
       const context = mount(<SignatureAddForm {...propsProfileBase} store={store} />)
-      const component = unwrapReduxComponent(context)
+      const component = unwrapReduxComponent(context).instance()
       component.setState({ country: 'United States', name: 'John Smith', postal: '6024' })
       expect(component.formIsValid()).to.be.equal(false)
     })
@@ -302,7 +303,7 @@ describe('<SignatureAddForm />', () => {
     it('checking volunteer requires phone', () => {
       const store = createMockStore(storeAnonymous)
       const context = mount(<SignatureAddForm {...propsProfileBase} store={store} />)
-      const component = unwrapReduxComponent(context)
+      const component = unwrapReduxComponent(context).instance()
       const reqFieldsBefore = component.updateRequiredFields(true)
       expect(typeof reqFieldsBefore.phone).to.be.equal('undefined')
       component.volunteer({ target: { checked: true } })
@@ -320,7 +321,7 @@ describe('<SignatureAddForm />', () => {
       // MORE TODO HERE
       const store = createMockStore(storeAnonymous)
       const context = mount(<SignatureAddForm {...propsProfileBase} store={store} />)
-      const component = unwrapReduxComponent(context)
+      const component = unwrapReduxComponent(context).instance()
 
       component.volunteer({ target: { checked: true } })
       expect(component.state.volunteer).to.be.equal(true)

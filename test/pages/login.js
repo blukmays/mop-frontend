@@ -26,8 +26,8 @@ describe('<Login />', () => {
 
   it('validates email', () => {
     const login = mount(<Provider store={empty} children={<Login />} />)
-    login.find('input[name="email"]').node.value = 'foo'
-    login.find('input[name="password"]').node.value = 'bar'
+    login.find('input[name="email"]').instance().value = 'foo'
+    login.find('input[name="password"]').instance().value = 'bar'
     login.find('form').simulate('submit')
     expect(login.find('.errors').text()).to.equal(
       'Invalid entry for the Email field.'

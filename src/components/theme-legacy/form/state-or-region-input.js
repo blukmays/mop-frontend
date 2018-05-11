@@ -3,13 +3,10 @@ import PropTypes from 'prop-types'
 
 import StateSelect from './state-select'
 
-const StateOrRegionInput = ({ country, stateOnChange, stateValidationError, regionOnChange }) => {
+const StateOrRegionInput = ({ country, stateOnChange, regionOnChange }) => {
   if (country === 'United States') {
     return (
-      <div>
-        <StateSelect onChange={stateOnChange} selectText='State*' />
-        <stateValidationError />
-      </div>
+      <StateSelect onChange={stateOnChange} selectText='State*' />
     )
   }
   return (
@@ -27,8 +24,7 @@ const StateOrRegionInput = ({ country, stateOnChange, stateValidationError, regi
 StateOrRegionInput.propTypes = {
   country: PropTypes.string,
   regionOnChange: PropTypes.func,
-  stateOnChange: PropTypes.func,
-  stateValidationError: PropTypes.element
+  stateOnChange: PropTypes.func
 }
 
 export default StateOrRegionInput

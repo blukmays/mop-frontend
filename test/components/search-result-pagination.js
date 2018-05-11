@@ -15,7 +15,7 @@ describe('<SearchResultPagination />', () => {
     const context = mount(<SearchResultPagination {...props} store={baseStore} />)
     expect(context.find('.pagination').length).to.equal(1)
     expect(context.find('.prevLink').length).to.equal(1)
-    expect(context.find('.nextLink').length).to.equal(1)
+    expect(context.find('a.nextLink').length).to.equal(1)
     expect(context.find('.pagelink').length).to.equal(0)
   })
 
@@ -24,7 +24,7 @@ describe('<SearchResultPagination />', () => {
     const context = mount(<SearchResultPagination {...props} store={baseStore} />)
     expect(context.find('.pagination').length).to.equal(1)
     expect(context.find('.prevLink').length).to.equal(1)
-    expect(context.find('.nextLink').length).to.equal(1)
+    expect(context.find('a.nextLink').length).to.equal(1)
     expect(context.find('.pagelink').length).to.equal(2)
   })
 
@@ -33,7 +33,7 @@ describe('<SearchResultPagination />', () => {
     const context = mount(<SearchResultPagination {...props} store={baseStore} />)
     expect(context.find('.pagination').length).to.equal(1)
     expect(context.find('.prevLink').length).to.equal(1)
-    expect(context.find('.nextLink').length).to.equal(1)
+    expect(context.find('a.nextLink').length).to.equal(1)
     expect(context.find('.pagelink').length).to.equal(4)
   })
 
@@ -42,7 +42,7 @@ describe('<SearchResultPagination />', () => {
     const context = mount(<SearchResultPagination {...props} store={baseStore} />)
     expect(context.find('.pagination').length).to.equal(1)
     expect(context.find('.prevLink').length).to.equal(1)
-    expect(context.find('.nextLink').length).to.equal(1)
+    expect(context.find('a.nextLink').length).to.equal(1)
     expect(context.find('.pagelink').length).to.equal(5)
   })
 
@@ -52,7 +52,7 @@ describe('<SearchResultPagination />', () => {
     const context = mount(<SearchResultPagination {...props} store={baseStore} />)
     expect(context.find('.pagination').length).to.equal(1)
     expect(context.find('.prevLink').length).to.equal(1)
-    expect(context.find('.nextLink').length).to.equal(1)
+    expect(context.find('a.nextLink').length).to.equal(1)
 
     // we show current page and a max of 3 prev and 3 next pages, like the current petition system
     expect(context.find('.pagelink').length).to.equal(7)
