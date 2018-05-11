@@ -8,10 +8,10 @@
   "scripts": {
     "test": "NODE_ENV=test BABEL_DISABLE_CACHE=1 mocha --require babel-core/register --require jsdom-global/register --require isomorphic-fetch --require ./test-setup.js --recursive",
     "test:coverage": "nyc --reporter=html --reporter=text npm test",
-    "build": "THEME=legacy webpack && THEME=giraffe webpack",
-    "dev-build": "THEME=legacy webpack -d && THEME=giraffe webpack -d",
+    "build": "THEME=legacy webpack --mode=production && THEME=giraffe webpack --mode=production",
+    "dev-build": "THEME=legacy webpack --mode=development && THEME=giraffe webpack --mode=development",
     "webpack-watch": "webpack -w",
-    "dev": "node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js --hot --progress --colors --port ${PORT:-8080} --inline",
+    "dev": "webpack-dev-server --mode=development",
     "lint": "eslint src test .*.js --ignore-pattern='!.eslintrc.js' ",
     "lint-and-test": "npm run lint && npm test"
   },
@@ -59,7 +59,7 @@
     "enzyme-adapter-react-16": "^1.1.1",
     "eslint": "~4.19.1",
     "eslint-config-airbnb": "^16.1.0",
-    "eslint-import-resolver-webpack": "^0.8.4",
+    "eslint-import-resolver-webpack": "^0.9.0",
     "eslint-plugin-import": "^2.11.0",
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-mocha": "^5.0.0",
@@ -67,7 +67,7 @@
     "eslint-plugin-react": "^7.7.0",
     "fetch-mock": "^5.1.5",
     "file-loader": "^0.11.1",
-    "html-webpack-plugin": "^2.22.0",
+    "html-webpack-plugin": "^3.2.0",
     "isomorphic-fetch": "^2.2.1",
     "jsdom": "11.10.0",
     "jsdom-global": "3.0.2",
@@ -80,10 +80,9 @@
     "require-hacker": "^3.0.1",
     "sinon": "^5.0.2",
     "svg-react-loader": "^0.4.5",
-    "webpack": "^2.3.3",
+    "webpack": "^4.6.0",
     "webpack-bundle-analyzer": "^2.11.1",
-    "webpack-dev-middleware": "^1.9.0",
-    "webpack-dev-server": "^2.4.2",
-    "webpack-hot-middleware": "^2.13.2"
+    "webpack-cli": "^2.1.2",
+    "webpack-dev-server": "^3.1.3"
   }
 }

@@ -12,7 +12,6 @@ var THEME_DIR = path.resolve(__dirname, 'src/components/theme-' + THEME);
 var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 var envVars = {
-  'NODE_ENV': (process.env.PROD) ? 'production' : 'development',
   'API_URI': process.env.API_URI ||(process.env.PROD ? '/api/v1' : '/local/api/v1'),
   'WORDPRESS_API_URI': process.env.WORDPRESS_API_URI || (process.env.PROD ? '' : '/local/api'),
   'API_WRITABLE': process.env.API_WRITABLE || process.env.PROD,
@@ -43,7 +42,8 @@ var webpackPlugins = [
 // Plugins for production
 if (process.env.PROD) {
   webpackPlugins = webpackPlugins.concat([
-    new webpack.optimize.UglifyJsPlugin({sourceMap: true})
+    // None yet
+    // Minification by default in webpack 4
   ])
 }
 
@@ -82,17 +82,16 @@ var config = {
     [APP_ENTRY]: APP_DIR + '/apps/' + APP_ENTRY + '.js'
   },
   devServer: {
-    host: "0.0.0.0",
+    host: '0.0.0.0',
+    port: 8080,
+    hot: true,
     historyApiFallback: {
       disableDotRule: true
     }
   },
-  devtool: 'sourcemap',
   output: {
     path: BUILD_DIR,
     publicPath: process.env.PUBLIC_ROOT || "/",
-    //NOTE: when process.env.PROD is true this will be the minified file
-    //TODO: maybe we should hash this and figure out a way to pass the hashed version to it
     filename: '[name].' + THEME + '.js',
     chunkFilename: 'chunk-[id]' + '.' + THEME + '.js?v=[chunkhash]'
   },
@@ -101,19 +100,19 @@ var config = {
     'react-dom': 'ReactDOM',
   },
   module : {
-    loaders : [
+    rules : [
       {
-        test : /\.jsx?$/,
-        include : APP_DIR,
-        loader : 'babel-loader'
+        test: /\.jsx?$/,
+        include: APP_DIR,
+        use: 'babel-loader'
       },
       {
         test: /\.json$/,
-        loader: "file-loader?name=[name].[ext]"
+        use: 'file-loader?name=[name].[ext]'
       },
       {
         test: /\.svg$/,
-        loader: "svg-react-loader"
+        use: 'svg-react-loader'
       }
     ]
   },
