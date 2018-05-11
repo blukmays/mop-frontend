@@ -52,8 +52,6 @@ describe('<SignatureAddForm />', () => {
 
       const store = createMockStore(storeAnonymous)
       const context = mount(<SignatureAddForm {...propsProfileBase} store={store} />)
-      const component = unwrapReduxComponent(context).instance()
-      expect(component.props.user.anonymous).to.be.equal(true)
       expect(context.find('input[name="name"]').length).to.equal(1)
       expect(context.find('input[name="email"]').length).to.equal(1)
       expect(context.find('input[name="address1"]').length).to.equal(0)
@@ -76,20 +74,17 @@ describe('<SignatureAddForm />', () => {
       expect(context.find('input[name="zip"]').length).to.equal(1)
     })
 
-    it('anonymous fields displaying', done => {
+    it('anonymous fields displaying', () => {
       const store = createMockStore(storeAnonymous)
       const context = mount(<SignatureAddForm {...propsProfileBase} store={store} />)
-      const component = unwrapReduxComponent(context)
-      component.setState({ hideUntilInteract: false }, () => {
-        expect(component.props.user.anonymous).to.be.equal(true)
-        expect(context.find('input[name="name"]').length).to.equal(1)
-        expect(context.find('input[name="email"]').length).to.equal(1)
-        expect(context.find('input[name="address1"]').length).to.equal(1)
-        expect(context.find('input[name="address2"]').length).to.equal(1)
-        expect(context.find('input[name="city"]').length).to.equal(1)
-        expect(context.find('input[name="zip"]').length).to.equal(1)
-        done()
-      })
+      context.find('input[name="name"]').simulate('change', { target: { value: 'Hello' } })
+
+      expect(context.find('input[name="name"]').length).to.equal(1)
+      expect(context.find('input[name="email"]').length).to.equal(1)
+      expect(context.find('input[name="address1"]').length).to.equal(1)
+      expect(context.find('input[name="address2"]').length).to.equal(1)
+      expect(context.find('input[name="city"]').length).to.equal(1)
+      expect(context.find('input[name="zip"]').length).to.equal(1)
     })
 
     it('petition with user fields displaying', () => {
