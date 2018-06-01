@@ -23,6 +23,7 @@ import {
   LoadableCreate,
   LoadablePreview,
   LoadableRevise,
+  LoadableFinished,
   LoadableRegister,
   LoadableLogin,
   LoadableStatic,
@@ -108,6 +109,7 @@ export const routes = store => {
       <Route path='create_start.html' component={LoadableCreate} minimalNav />
       <Route path='create_preview.html' component={LoadablePreview} minimalNav />
       <Route path='create_revise.html' component={LoadableRevise} minimalNav />
+      <Route path='create_finished.html' component={LoadableFinished} minimalNav />
       <Route path='petition_report.html' component={LoadablePetitionReport} />
       <Route path=':organization/create_start.html' component={LoadableCreate} onEnter={orgLoader} minimalNav />
       <Route path='login/' component={LoadableLogin} />

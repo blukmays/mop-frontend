@@ -20,7 +20,7 @@ const Thanks = ({
       <h1 className='size-superxl lh-100 font-lighter'>Thanks!</h1>
     </div>
     <div className='span5 offset1 bump-top-3 font-lighter lh-24'>
-      Now that you have {isCreator ? 'created' : 'signed'},
+      Now that you have {isCreator ? 'created your petition' : 'signed'},
       <span className='font-heavy moveon-bright-red'> help it grow</span> by
       asking your friends, family, colleagues to sign.
     </div>

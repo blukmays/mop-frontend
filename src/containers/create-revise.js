@@ -18,7 +18,11 @@ class CreateRevise extends React.Component {
 
 function mapStateToProps({ petitionCreateStore }) {
   return {
-    hasPetition: !!(petitionCreateStore && petitionCreateStore.title),
+    hasPetition: !!(
+      petitionCreateStore &&
+      petitionCreateStore.title &&
+      !petitionCreateStore.submitted
+    ),
     petition: petitionCreateStore
   }
 }

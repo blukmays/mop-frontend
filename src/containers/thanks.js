@@ -43,8 +43,6 @@ class Thanks extends React.Component {
     this.trackingParams = getTrackingParams(signatureMessage, user)
     this.trackingParamsString = stringifyParams(this.trackingParams)
 
-    this.isCreator = false // Maybe test user.id==petition.creator_id or something, if we want to expose that
-
     this.shortLinkArgs = [
       petition.petition_id,
       user && user.signonId,
@@ -52,7 +50,7 @@ class Thanks extends React.Component {
 
     this.state = {
       sharedSocially: false,
-      pre: getPre(fromSource, petition, this.isCreator)
+      pre: getPre(fromSource, petition, this.props.isCreator)
     }
 
     this.recordShare = this.recordShare.bind(this)
@@ -84,7 +82,7 @@ class Thanks extends React.Component {
     return (
       <TwitterButton
         petition={this.props.petition}
-        shortLinkMode={this.isCreator ? 'c' : 't'}
+        shortLinkMode={this.props.isCreator ? 'c' : 't'}
         shortLinkArgs={this.shortLinkArgs}
         recordShare={this.recordShare('twitter', `${this.state.pre}.tw`)}
         afterShare={() => this.setState({ sharedSocially: true })}
@@ -107,7 +105,7 @@ class Thanks extends React.Component {
   renderMail() {
     return (
       <MailButton
-        isCreator={this.isCreator}
+        isCreator={this.props.isCreator}
         petition={this.props.petition}
         prefix={this.state.pre}
         trackingParams={this.trackingParamsString}
@@ -119,7 +117,7 @@ class Thanks extends React.Component {
   renderCopyPaste() {
     return (
       <CopyPaste
-        isCreator={this.isCreator}
+        isCreator={this.props.isCreator}
         petition={this.props.petition}
         prefix={this.state.pre}
         trackingParams={this.trackingParamsString}
@@ -142,7 +140,7 @@ class Thanks extends React.Component {
     return (
       <ThanksComponent
         sharedSocially={this.state.sharedSocially}
-        isCreator={this.isCreator}
+        isCreator={this.props.isCreator}
         renderTwitter={this.renderTwitter}
         renderFacebook={this.renderFacebook}
         renderMail={this.renderMail}
@@ -156,12 +154,17 @@ class Thanks extends React.Component {
 
 Thanks.propTypes = {
   petition: PropTypes.object,
+  isCreator: PropTypes.bool,
   user: PropTypes.object,
   signatureMessage: PropTypes.object,
   fromSource: PropTypes.string,
   nextPetitionsLoaded: PropTypes.bool,
   nextPetition: PropTypes.object,
   dispatch: PropTypes.func
+}
+
+Thanks.defaultProps = {
+  isCreator: false
 }
 
 function mapStateToProps(store) {

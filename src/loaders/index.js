@@ -33,6 +33,11 @@ export const LoadableRevise = Loadable({
   loading: Loading
 })
 
+export const LoadableFinished = Loadable({
+  loader: () => import('../containers/create-finished'),
+  loading: Loading
+})
+
 export const LoadableRegister = Loadable({
   loader: () => import('Theme/register'),
   loading: Loading

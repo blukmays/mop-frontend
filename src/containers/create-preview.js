@@ -43,7 +43,11 @@ CreatePreview.propTypes = {
 
 function mapStateToProps({ petitionCreateStore, userStore }) {
   return {
-    hasPetition: !!(petitionCreateStore && petitionCreateStore.title),
+    hasPetition: !!(
+      petitionCreateStore &&
+      petitionCreateStore.title &&
+      !petitionCreateStore.submitted
+    ),
     petition: petitionCreateStore,
     user: userStore
   }
