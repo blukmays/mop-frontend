@@ -15,6 +15,39 @@ export const formatDate = date => {
   return `${monthAbbr[monthIndex]} ${day}, ${year}`
 }
 
+export default class FormTracker {
+  constructor() {
+    this.formStarted = 0
+    this.formFinished = 0
+  }
+
+  startForm() {
+    this.formStarted = 1
+    this.track('form_started')
+  }
+
+  endForm() {
+    this.formFinished = 1
+    this.track('form_finished')
+  }
+
+  static track(eventName) {
+    window.analytics.track({
+      event: eventName,
+      properties: {
+        result: eventName,
+        variation_name: 'a',
+        guestlogin: 1,
+        validationerror: 1,
+        formexpand: 0,
+        sectionadvanced: 1,
+        fieldfocused: 7,
+        fieldchanged: 7
+      }
+    })
+  }
+}
+
 export const text2paras = str => str.split(/\n+/)
 
 export const ellipsize = (str, length) => {
